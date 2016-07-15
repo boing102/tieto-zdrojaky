@@ -1,0 +1,17 @@
+#gadget-message-container {
+    top: 1em;
+    right: 1em;
+    padding: 1em;
+    position: fixed;
+    z-index: 5000;
+    word-wrap: break-word;
+    max-width: 50%;
+}
+
+#gadget-message-container .aui-message {
+    margin: 1em 2em;
+}
+
+#gadget-message-container .aui-message ~ .aui-message {
+    margin-top: 0;
+}

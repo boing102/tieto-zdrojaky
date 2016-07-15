@@ -1,0 +1,136 @@
+{namespace Plugin.Item.Filter}
+
+/**
+* DashboardItem edit template
+* @param preferences
+* @param options
+* @param modeOptions selectedValues
+* @param selectedValues
+*/
+{template .Config}
+    {call Atlassian.DashboardItem.Common.Templates.config}
+        {param isConfigured: $preferences.isConfigured /}
+        {param fields}
+            <fieldset>
+                {call Plugin.Item.Filter.select}
+                    {param label}
+                        {getText('sk.eea.jira.dashoard.item.search.fields.mode.label')}
+                    {/param}
+                    {param required: true /}
+                    {param options: $modeOptions /}
+                    {param id: 'mode-field' /}
+                    {param description}
+                        {getText('sk.eea.jira.dashoard.item.search.fields.mode.description')}
+                    {/param}
+                    {param selected: $selectedValues.mode /}
+                {/call}
+                {call Plugin.Item.Filter.select}
+                    {param label}
+                        {getText('sk.eea.jira.dashoard.item.search.fields.search.field.label')}
+                    {/param}
+                    {param required: true /}
+                    {param options: $options /}
+                    {param id: 'first-search-field' /}
+                    {param description}
+                            {getText('sk.eea.jira.dashoard.item.search.fields.search.field.description')}
+                    {/param}
+                    {param selected: $selectedValues.first /}
+                {/call}
+                {call Plugin.Item.Filter.select}
+                    {param label}
+                        {getText('sk.eea.jira.dashoard.item.search.fields.search.field.opt.label')}
+                    {/param}
+                    {param required: false /}
+                    {param options: $options /}
+                    {param id: 'second-search-field' /}
+                    {param description}
+                            {getText('sk.eea.jira.dashoard.item.search.fields.search.field.opt.description')}
+                    {/param}
+                    {param selected: $selectedValues.second /}
+                {/call}
+                {call Plugin.Item.Filter.select}
+                    {param label}
+                        {getText('sk.eea.jira.dashoard.item.search.fields.search.field.opt.label')}
+                    {/param}
+                    {param required: false /}
+                    {param options: $options /}
+                    {param id: 'third-search-field' /}
+                    {param description}
+                            {getText('sk.eea.jira.dashoard.item.search.fields.search.field.opt.description')}
+                    {/param}
+                    {param selected: $selectedValues.third /}
+                {/call}
+            </fieldset>
+        {/param}
+    {/call}
+{/template}
+
+/**
+* DashboardItem view template
+* @param labels
+*/
+{template .view}
+    <div class="search-results-dashboard-item">
+        <form id="searchform" action="" target="_parent" class="aui gdt">
+            {foreach $label in $labels}
+                {call Plugin.Item.Filter.textField}
+                    {param label: $label /}
+                    {param required: false /}
+                    {param id: 'text-field-'+ index($label) /}
+                {/call}
+            {/foreach}
+
+            <div class="buttons-container">
+                <input class="button submit" type="submit" id="search-button-id" value={getText('sk.eea.jira.dashoard.item.search.fields.button.search')}>
+            </div>
+        </form>
+    </div>
+{/template}
+
+/**
+* Template for searchable fields autocomplete
+* @param label
+* @param required
+* @param options
+* @param id
+* @param? description
+* @param? selected
+*/
+{template .select}
+    <div class="field-group">
+        <label for="{$id}">{$label}
+            {if $required}
+                <span class="aui-icon icon-required"> required</span>
+            {/if}
+        </label>
+        <select id="{$id}">
+            {foreach $option in $options}
+                {if $selected == $option.value}
+                    <option selected value={$option.value}>{$option.label}</option>
+                {else}
+                    <option value={$option.value}>{$option.label}</option>
+                {/if}
+            {/foreach}
+        </select>
+        <div class="description">{$description}</div>
+    </div>
+{/template}
+
+/**
+* Template for text field in gadget view
+* @param required
+* @param label
+* @param id
+*/
+{template .textField}
+    <div class="field-group">
+        <label for="{$id}"> {$label}
+            {if $required}
+                <span class="aui-icon icon-required"> required</span>
+            {/if}
+        </label>
+        <input class="text medium-field" id="{$id}" type="text">
+    </div>
+{/template}
+
+

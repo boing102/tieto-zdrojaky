@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.5"?>
+<plugin>
+
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.startup"
+         name="Reputator Plugin Startup"
+         point="org.eclipse.ui.startup">
+      <startup
+            class="sk.stuba.fiit.reputator.plugin.Activator$Startup">
+      </startup>
+   </extension>
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.search"
+         name="Reputator Plugin Search"
+         point="org.eclipse.search.searchPages">
+      <page
+            class="sk.stuba.fiit.reputator.plugin.ui.SearchPage"
+            extensions="*"
+            tabPosition="1"
+            icon="icons/search.gif"
+            id="sk.stuba.fiit.reputator.plugin.search.view"
+            label="Reputator Search">
+      </page>
+   </extension>
+   
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.commands"
+         name="Reputator Plugin Commands"
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.eclipse.search.ui.category.search"
+            id="sk.stuba.fiit.reputator.plugin.commands.search"
+            name="Reputator">
+      </command>
+   </extension>
+   
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.menus"
+         name="Reputator Plugin Menus"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=navigate">
+         <menu
+               id="org.eclipse.search.menu"
+               label="Search"
+               mnemonic="a">
+            <command
+                  commandId="org.eclipse.search.ui.openSearchDialog"
+                  label="Search..."
+                  style="push">
+            </command>
+            <command
+                  commandId="sk.stuba.fiit.reputator.plugin.commands.search"
+                  label="Reputator..."
+                  mnemonic="R"
+                  style="push">
+            </command>
+            <separator
+                  name="org.eclipse.search.menu.separator"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+   
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.bindings"
+         name="Reputator Plugin Bindings"
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="sk.stuba.fiit.reputator.plugin.commands.search"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+ALT+R">
+      </key>
+   </extension>
+   <extension
+         id="sk.stuba.fiit.reputator.plugin.handlers"
+         name="Reputator Plugin Handlers"
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="sk.stuba.fiit.reputator.plugin.ui.SearchCommandHandler"
+            commandId="sk.stuba.fiit.reputator.plugin.commands.search">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.search.searchResultViewPages">
+      <viewPage
+            class="sk.stuba.fiit.reputator.plugin.ui.SearchResultViewPage"
+            id="sk.stuba.fiit.reputator.plugin.results"
+            label="Reputator Search"
+            searchResultClass="sk.stuba.fiit.reputator.plugin.SearchResult">
+      </viewPage>
+   </extension>
+
+</plugin>

@@ -1,0 +1,64 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="jira-filter-dashboard-item"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="jira-filter-dashboard-item-resources" name="jira-filter-dashboard-item Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="jira-filter-dashboard-item.css" location="/css/jira-filter-dashboard-item.css"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>jira-filter-dashboard-item</context>
+    </web-resource>
+
+    <rest key="rest-dashboard-item-search" path="/eea-dashboard-item-search"
+          version="1.0">
+        <description>Used for redirection based on search results (parameterized by custom fields).
+        </description>
+    </rest>
+
+    <web-resource key="new-dashboard-item-resources">
+        <context>atl.dashboard</context>
+
+        <dependency>com.atlassian.gadgets.publisher:dashboard-item-common</dependency>
+        <dependency>com.atlassian.jira.gadgets:filter-picker-component</dependency>
+        <dependency>com.atlassian.jira.gadgets:column-picker-component</dependency>
+        <dependency>com.atlassian.jira.gadgets:search-results-component</dependency>
+        <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+        <dependency>com.atlassian.auiplugin:aui-select2</dependency>
+
+        <transformation extension="soy"><transformer key="soyTransformer"/></transformation>
+        <transformation extension="js"><transformer key="jsI18n"/></transformation>
+
+        <resource type="download" location="js/message.js"  name="js/message.js"/>
+        <resource type="download" name="jira-filter-dashboard-item.css" location="/css/jira-filter-dashboard-item.css"/>
+        <resource type="download" location="js/gadget.js"  name="js/gadget.js"/>
+        <resource type="download" location="js/gadget.soy"  name="js/gadget.soy.js"/>
+        <resource type="i18n" name="i18n" location="jira-filter-dashboard-item" />
+    </web-resource>
+
+    <dashboard-item key="plugin-dashboard-item" configurable="true">
+        <definition>
+            <title key="sk.eea.jira.dashoard.item.search.fields.title"/>
+            <categories>
+                <category>JIRA</category>
+            </categories>
+            <author>
+                <name>EEA</name>
+            </author>
+            <thumbnail location="/download/resources/com.atlassian.jira.gadgets:login-dashboard-item-resources/login-thumb.png"/>
+        </definition>
+        <description key="sk.eea.jira.dashoard.item.search.fields.description"/>
+        <amd-module>search-fields-DI/jira-filter-dashboard-item</amd-module>
+    </dashboard-item>
+
+</atlassian-plugin>
